@@ -8,14 +8,14 @@ import IconSelector, {ICON_TYPE} from './Component/common/IconSelect';
 const Tab = createBottomTabNavigator();
 
 const CustomTabBarIcon = ({focused, iconName, label}) => (
-  <View style={{alignItems: 'center'}}>
+  <View style={{alignItems: 'center', flexDirection:'row' , justifyContent:'space-evenly',}}>
     <IconSelector
       type={ICON_TYPE.Ionicons}
       name={iconName}
-      size={24}
+      size={14}
       color={focused ? '#CF76DD' : 'black'}
     />
-    {focused && <Text style={{color: '#CF76DD', fontSize: 18}}>{label}</Text>}
+    {focused && <Text style={{color: '#CF76DD', fontSize: 14, marginHorizontal:5,}}>{label}</Text>}
   </View>
 );
 
@@ -62,20 +62,22 @@ const BottomTabNavigator = () => {
           paddingBottom: 10,
           padding: 10,
           elevation: 5,
+          height:60,
         },
         tabBarItemStyle: {
           padding: 8,
           borderRadius: 10,
-          marginHorizontal: 15, // Add margin between items
+          marginHorizontal: 15, 
         },
         tabBarActiveBackgroundColor: '#FFE7EA',
         headerShown: false,
+        tabBarLabel: () => null,
       })}>
       {/* All tabs navigate to the same screen */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        options={{title: 'Home'}}
+        // options={{title: 'Home'}}
       />
       <Tab.Screen
         name="Search"

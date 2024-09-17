@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const globalStyles = StyleSheet.create({
   container: {
@@ -10,7 +10,7 @@ const globalStyles = StyleSheet.create({
     borderTopRightRadius: 25,
     backgroundColor: 'white',
   },
-  bellContainer: {borderRadius: 5, padding: 10, backgroundColor: '#fcc1c3'},
+  bellContainer: { borderRadius: 5, padding: 10, backgroundColor: '#fcc1c3' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -102,7 +102,7 @@ const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   ratingBox: {
-    backgroundColor: 'yellow',
+    backgroundColor: 'red',
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -120,6 +120,103 @@ const globalStyles = StyleSheet.create({
     borderTopRightRadius: 20,
     elevation: 5,
   },
+  bannerImage: {
+    width: '100%',
+    height: '70%',
+    borderRadius: 10,
+    resizeMode: 'cover',
+    position: 'absolute'
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 10,
+    alignItems: 'center',
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    margin: 3,
+  },
+  bannerItem: {
+    height: 200,  // Adjust as per your carousel's height
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',  // Important for absolute positioning inside
+    overflow: 'hidden',  // Ensures no overflow if content exceeds bounds
+  },
+  absoluteImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 40,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  bannerTitle: {
+    fontSize: 22,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  bannerDiscount: {
+    fontSize: 18,
+    color: 'black',
+    // marginTop: 5,
+    // textShadowColor: 'rgba(0, 0, 0, 0.5)',  // Optional shadow
+    // textShadowOffset: { width: 2, height: 2 },
+    // textShadowRadius: 4,
+  },
+  carouselItem: {
+    height: 150,
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 10,
+  },
+  activeDot: {
+    backgroundColor: '#ff6694',
+  },
+  inactive: {
+    backgroundColor: '#ffd7e5'
+  },
+  discountContainer: {
+    position: 'absolute',
+    bottom: 35,  // Adjust based on your needs
+    left: 30,
+    alignItems: 'flex-start',  // Align discount text to the left
+    justifyContent: 'center',
+  },
+  serviceGrid1: {
+    flex: 1,
+    margin: 5,
+    borderRadius: 10,
+    height: 200,
+    position: 'relative',
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  serviceText1: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 10,
+    position: 'absolute',
+    zIndex: 1,
+    bottom: 20,
+  }
 });
 
 export default globalStyles;
