@@ -127,42 +127,53 @@ const Categories = () => {
 
     return (
         <>
-            <View style={[globalStyles.header, { backgroundColor: '#ae88ff' }]}>
+            <View style={[globalStyles.header, { backgroundColor: '#ae88ff', height: 150, borderBottomRightRadius: 40, }]}>
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                    <IconSelector type={ICON_TYPE.Ionicons} name="menu" size={30} color="#000" />
+                    <IconSelector type={ICON_TYPE.Ionicons} name="menu" size={30} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image
-                        source={require('../assets/images/infinity.png')}
-                        style={{ width: 30, height: 30, resizeMode: 'contain' }}
-                    />
-                </TouchableOpacity>
-            </View>
-            <ScrollView style={{ flex: 1, backgroundColor: '#ae88ff' }}>
-                <View style={{ backgroundColor: '#ecffce', marginRight: '20%', bottom: -30, borderRadius: 20, padding: 20, borderBottomRightRadius: 50, overflow: 'hidden' }}>
-                    <Image
-                        source={require('../assets/images/dots.png')}
-                        style={{ width: 150, height: 100, resizeMode: 'contain', position: 'absolute', right: -5, top: -5, }}
-                    />
-                    <Text style={styles.welcomeText}>Welcome,</Text>
-                    <Text style={styles.titleText}>{'Find Your\nSectors!'}</Text>
-                    <View style={[globalStyles.searchBox, { backgroundColor: 'white' }]}>
-                        <View style={globalStyles.inputContainer}>
-                            <IconSelector
-                                type={ICON_TYPE.Ionicons}
-                                name="search-outline"
-                                size={25}
-                                color="#ff6694"
-                            />
-                            <TextInput
-                                placeholderTextColor={'#a8a8a8'}
-                                placeholder="What are you looking for?"
-                                style={globalStyles.searchInput}
-                            />
-                        </View>
-                    </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../assets/images/infinity.png')}
+                            style={{ width: 30, height: 30, resizeMode: 'contain' }}
+                        />
+                    </TouchableOpacity>
+                    <View style={{
+                        width: 10,
+                        height: 10,
+                        backgroundColor: '#ff8a00',
+                        borderRadius: 5,
+                    }} />
                 </View>
 
+            </View>
+            <View style={{ backgroundColor: '#ecffce', marginRight: '20%', zIndex: 0, top: -30, borderRadius: 20, padding: 20, borderBottomRightRadius: 50, overflow: 'hidden', marginBottom: -50, }}>
+                <Image
+                    source={require('../assets/images/dots.png')}
+                    style={{ width: 150, height: 100, resizeMode: 'contain', position: 'absolute', right: -5, top: -5, }}
+                />
+                <Text style={styles.welcomeText}>Welcome,</Text>
+                <Text style={styles.titleText}>{'Find Your\nDream Sectors!'}</Text>
+                <View style={[globalStyles.searchBox, { backgroundColor: 'white', marginBottom: 30, marginTop: 10, }]}>
+                    <View style={globalStyles.inputContainer}>
+                        <IconSelector
+                            type={ICON_TYPE.Ionicons}
+                            name="search-outline"
+                            size={25}
+                            color="#ff6694"
+                        />
+                        <TextInput
+                            placeholderTextColor={'#a8a8a8'}
+                            placeholder="What are you looking for?"
+                            style={globalStyles.searchInput}
+                        />
+                    </View>
+                </View>
+            </View>
+            <ScrollView style={{
+                flex: 1, backgroundColor: 'white', borderTopRightRadius: 20,
+                borderTopLeftRadius: 20,
+            }}>
                 <View style={styles.container}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 16.5 }}>
                         <Text
@@ -234,7 +245,6 @@ const Categories = () => {
                     <FlatList data={recommededData} renderItem={item => renderRecommeded(item)} keyExtractor={(item, index) => index} />
                 </View>
             </ScrollView >
-
         </>
     );
 };
