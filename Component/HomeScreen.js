@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import globalStyles from './globalStyles';
 import IconSelector, { ICON_TYPE } from './common/IconSelect';
 import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 const services = [
@@ -223,8 +224,10 @@ const MainContent = () => {
   )
 
   return (
-    <ScrollView style={globalStyles.container}>
-      <View>
+    <>
+      <LinearGradient colors={['#ffb5b1', '#f0a4bd']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }} style={{ backgroundColor: 'red' }}>
         <View style={globalStyles.header}>
           <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
             <Icon name="menu" size={30} color="#000" />
@@ -257,171 +260,174 @@ const MainContent = () => {
           source={require('../assets/images/cat.png')}
           style={[globalStyles.dogImage, { right: '3%' }]}
         />
-      </View>
+      </LinearGradient>
+      <ScrollView style={globalStyles.container}>
 
-      <View style={globalStyles.mainView}>
-        {/* Search Box */}
-        <View style={globalStyles.searchBox}>
-          <View style={globalStyles.inputContainer}>
-            <IconSelector
-              type={ICON_TYPE.Ionicons}
-              name="search-outline"
-              size={25}
-              color="#ff6694"
-            />
-            <TextInput
-              placeholderTextColor={'#ff6694'}
-              placeholder="What are you looking for?"
-              style={globalStyles.searchInput}
-            />
-            <TouchableOpacity>
+        <View style={globalStyles.mainView}>
+          {/* Search Box */}
+          <View style={globalStyles.searchBox}>
+            <View style={globalStyles.inputContainer}>
               <IconSelector
-                type={ICON_TYPE.MaterialCommunityIcons}
-                name="sort-variant"
+                type={ICON_TYPE.Ionicons}
+                name="search-outline"
                 size={25}
-                color="#000"
+                color="#ff6694"
               />
-            </TouchableOpacity>
+              <TextInput
+                placeholderTextColor={'#ff6694'}
+                placeholder="What are you looking for?"
+                style={globalStyles.searchInput}
+              />
+              <TouchableOpacity>
+                <IconSelector
+                  type={ICON_TYPE.MaterialCommunityIcons}
+                  name="sort-variant"
+                  size={25}
+                  color="#000"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        {/* Banner */}
-        {/* <View style={globalStyles.banner}>
+          {/* Banner */}
+          {/* <View style={globalStyles.banner}>
           <Text style={globalStyles.bannerText}>All-New Groomers in Town!</Text>
           <Text style={globalStyles.discountText}>BOOK NOW! -20%</Text>
         </View> */}
 
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: 20,
-          }}>
-          <FlatList
-            data={banners}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            snapToAlignment="center"
-            snapToInterval={ITEM_WIDTH + 2 * SPACING}
-            decelerationRate="fast"
-            contentContainerStyle={{ paddingHorizontal: (width - ITEM_WIDTH) / 2 }}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-              { useNativeDriver: false }
-            )}
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={viewConfig}
-            pagingEnabled={true}
-          />
-          <View style={globalStyles.dotsContainer}>
-            {banners.map((_, index) => {
-              const isActive = index === currentIndex;
-              return (
-                <View
-                  key={index}
-                  style={[globalStyles.dot, isActive ? globalStyles.activeDot : globalStyles.inactive,]}
-                />
-              );
-            })}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginVertical: 20,
+            }}>
+            <FlatList
+              data={banners}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              snapToAlignment="center"
+              snapToInterval={ITEM_WIDTH + 2 * SPACING}
+              decelerationRate="fast"
+              contentContainerStyle={{ paddingHorizontal: (width - ITEM_WIDTH) / 2 }}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                { useNativeDriver: false }
+              )}
+              onViewableItemsChanged={onViewableItemsChanged}
+              viewabilityConfig={viewConfig}
+              pagingEnabled={true}
+            />
+            <View style={globalStyles.dotsContainer}>
+              {banners.map((_, index) => {
+                const isActive = index === currentIndex;
+                return (
+                  <View
+                    key={index}
+                    style={[globalStyles.dot, isActive ? globalStyles.activeDot : globalStyles.inactive,]}
+                  />
+                );
+              })}
+            </View>
           </View>
-        </View>
 
-        {/* Services */}
-        <View style={{ flexDirection: 'row', marginHorizontal: 16.5 }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              marginRight: '40%',
-            }}>
-            {'Popular Service'}
-          </Text>
-          <IconSelector
-            type={ICON_TYPE.Entypo}
-            name="dots-three-horizontal"
-            size={22}
-            color="black"
-          />
-        </View>
-        <FlatList
-          data={services}
-          renderItem={renderService}
-          keyExtractor={item => item.id}
-          numColumns={2}
-          contentContainerStyle={{ padding: 10, }}
-        />
-
-        {/* Service Providers */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 16.5 }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-            }}>
-            {'Service Providers'}
-          </Text>
-          <IconSelector
-            type={ICON_TYPE.Entypo}
-            name="dots-three-horizontal"
-            size={22}
-            color="black"
-          />
-        </View>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <SingleItem item={item} />}
-        />
-
-        {/* Ratings */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 16.5 }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-            }}>
-            {'Ratings'}
-          </Text>
-          <IconSelector
-            type={ICON_TYPE.Entypo}
-            name="dots-three-horizontal"
-            size={22}
-            color="black"
-          />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 16.5 }}>
-          <Text
-            style={{
-              color: '#ff709b',
-              fontWeight: 'bold',
-              fontSize: 16,
-            }}>
-            {'13 Reviews'}
-          </Text>
-          <TouchableOpacity style={{ flexDirection: 'row' }}>
-            <Text style={{
-              color: '#ff709b',
-              fontWeight: 'bold',
-              fontSize: 14,
-              marginRight: 10,
-            }}>
-              {'WRITE A REVIEW'}
+          {/* Services */}
+          <View style={{ flexDirection: 'row', marginHorizontal: 16.5 }}>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginRight: '40%',
+              }}>
+              {'Popular Service'}
             </Text>
             <IconSelector
-              type={ICON_TYPE.MaterialCommunityIcons}
-              name="square-edit-outline"
+              type={ICON_TYPE.Entypo}
+              name="dots-three-horizontal"
               size={22}
-              color="#ff6694"
+              color="black"
             />
-          </TouchableOpacity>
-        </View>
-        {/* <View style={globalStyles.ratingContainer}>
+          </View>
+          <View style={{ flex: 1 }}>
+            <FlatList
+              data={services}
+              renderItem={renderService}
+              keyExtractor={item => item.id}
+              numColumns={2}
+              contentContainerStyle={{ padding: 10, width: '100%', justifyContent: 'flex-start' }}
+            />
+          </View>
+
+          {/* Service Providers */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 16.5 }}>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              {'Service Providers'}
+            </Text>
+            <IconSelector
+              type={ICON_TYPE.Entypo}
+              name="dots-three-horizontal"
+              size={22}
+              color="black"
+            />
+          </View>
+          <FlatList
+            data={data}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => <SingleItem item={item} />}
+          />
+
+          {/* Ratings */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 16.5 }}>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              {'Ratings'}
+            </Text>
+            <IconSelector
+              type={ICON_TYPE.Entypo}
+              name="dots-three-horizontal"
+              size={22}
+              color="black"
+            />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 16.5 }}>
+            <Text
+              style={{
+                color: '#ff709b',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              {'13 Reviews'}
+            </Text>
+            <TouchableOpacity style={{ flexDirection: 'row' }}>
+              <Text style={{
+                color: '#ff709b',
+                fontWeight: 'bold',
+                fontSize: 14,
+                marginRight: 10,
+              }}>
+                {'WRITE A REVIEW'}
+              </Text>
+              <IconSelector
+                type={ICON_TYPE.MaterialCommunityIcons}
+                name="square-edit-outline"
+                size={22}
+                color="#ff6694"
+              />
+            </TouchableOpacity>
+          </View>
+          {/* <View style={globalStyles.ratingContainer}>
           <Text style={globalStyles.sectionTitle}>Ratings</Text>
           {['Pooja Jain', 'Pooja Jain'].map((reviewer, index) => (
             <View key={index} style={globalStyles.ratingBox}>
@@ -439,14 +445,15 @@ const MainContent = () => {
             </View>
           ))}
         </View> */}
-        <FlatList
-          data={ratingData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <RatingItem item={item} rating={item.rating}
-            setRating={(rating) => setRatingForItem(item.id, rating)} />}
-        />
-      </View>
-    </ScrollView>
+          <FlatList
+            data={ratingData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => <RatingItem item={item} rating={item.rating}
+              setRating={(rating) => setRatingForItem(item.id, rating)} />}
+          />
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

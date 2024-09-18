@@ -4,41 +4,54 @@ import globalStyles from './globalStyles';
 import { useNavigation } from '@react-navigation/native';
 import IconSelector, { ICON_TYPE } from './common/IconSelect';
 import { FlatList } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 
 const category = [
     {
         name: 'Construction',
         icon: 'construct-outline',
+        startColor: '#fefeff',
+        endColor: '#cce0ff',
         color: '#cee2ff',
         iconColor: '#165dc9',
     },
     {
         name: 'Entertainment',
         icon: 'musical-notes-outline',
+        startColor: '#fffffe',
+        endColor: '#ffe9bf',
         color: '#ffeac2',
         iconColor: '#ffa800',
     },
     {
         name: 'Pet Care',
         icon: 'paw-outline',
+        startColor: '#fefeff',
+        endColor: '#ffb1de',
         color: '#ffb5df',
         iconColor: '#ff4d4d',
     },
     {
         name: 'Home Care',
         icon: 'home-outline',
+        startColor: '#fefeff',
+        endColor: '#c1fcf6',
         color: '#c3fcf6',
         iconColor: '#00b894',
     },
     {
         name: 'Events',
         icon: 'calendar-outline',
+        startColor: '#fefeff',
+        endColor: '#ffc9ad',
         color: '#ffcdb2',
         iconColor: '#ff894b',
     },
     {
         name: 'HealthCare',
         icon: 'medkit-outline',
+        startColor: '#fefeff',
+        endColor: '#cfcfff',
         color: '#d2d2ff',
         iconColor: '#6a5acd',
     },
@@ -71,7 +84,10 @@ const Categories = () => {
     const renderCategories = ({ item }) => (
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 15, width: '95%', marginHorizontal: 16.5 }}>
             {item.map((category, index) => (
-                <TouchableOpacity
+                <LinearGradient
+                    colors={[category.startColor, category.endColor]} // Adjust colors if needed
+                    start={{ x: 0, y: 0 }} // Gradient starts from right
+                    end={{ x: 1, y: 1 }}   // Gradient ends at left
                     key={index}
                     style={{
                         flex: 1,
@@ -86,7 +102,7 @@ const Categories = () => {
                     }}>
                     <IconSelector type={ICON_TYPE.Ionicons} name={category.icon} size={20} color={category.iconColor} />
                     <Text style={{ color: 'black', marginTop: 5, fontSize: 14 }}>{category.name}</Text>
-                </TouchableOpacity>
+                </LinearGradient>
             ))}
         </View>
     )
@@ -126,8 +142,11 @@ const Categories = () => {
 
 
     return (
-        <>
-            <View style={[globalStyles.header, { backgroundColor: '#ae88ff', height: 150, borderBottomRightRadius: 40, }]}>
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <LinearGradient colors={['#a276ff', '#e9dfff']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={[globalStyles.header, { height: 150, borderBottomRightRadius: 40 }]}>
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                     <IconSelector type={ICON_TYPE.Ionicons} name="menu" size={30} color="white" />
                 </TouchableOpacity>
@@ -145,8 +164,7 @@ const Categories = () => {
                         borderRadius: 5,
                     }} />
                 </View>
-
-            </View>
+            </LinearGradient>
             <View style={{ backgroundColor: '#ecffce', marginRight: '20%', zIndex: 0, top: -30, borderRadius: 20, padding: 20, borderBottomRightRadius: 50, overflow: 'hidden', marginBottom: -50, }}>
                 <Image
                     source={require('../assets/images/dots.png')}
@@ -245,7 +263,7 @@ const Categories = () => {
                     <FlatList data={recommededData} renderItem={item => renderRecommeded(item)} keyExtractor={(item, index) => index} />
                 </View>
             </ScrollView >
-        </>
+        </View>
     );
 };
 

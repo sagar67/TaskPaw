@@ -202,6 +202,7 @@ const globalStyles = StyleSheet.create({
     margin: 5,
     borderRadius: 10,
     height: 200,
+    maxWidth: '50%',
     position: 'relative',
     overflow: 'hidden',
     justifyContent: 'center',
