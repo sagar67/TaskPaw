@@ -4,8 +4,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from './Component/HomeScreen';
 import {Text, View} from 'react-native';
 import IconSelector, {ICON_TYPE} from './Component/common/IconSelect';
+import { createStackNavigator } from '@react-navigation/stack';
+import Categories from './Component/Categories';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const CustomTabBarIcon = ({focused, iconName, label}) => (
   <View style={{alignItems: 'center', flexDirection:'row' , justifyContent:'space-evenly',}}>
@@ -19,7 +24,6 @@ const CustomTabBarIcon = ({focused, iconName, label}) => (
   </View>
 );
 
-// Bottom Tab Navigation
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
@@ -94,14 +98,37 @@ const BottomTabNavigator = () => {
         component={HomeScreen}
         options={{title: 'Profile'}}
       />
+      <Tab.Screen name="Categories" component={Categories} options={{
+          tabBarButton: () => null,  
+        }} />
     </Tab.Navigator>
   );
 };
 
+const MainScreen = () => (
+  <BottomTabNavigator />
+);
+
+const DrawerNavigator = () => (
+  <Drawer.Navigator
+    screenOptions={{
+      headerShown: false, 
+    }}
+  >
+    <Drawer.Screen name="Main" component={MainScreen} options={{ title: 'Main' }} />
+    <Drawer.Screen name="Categories" component={Categories} options={{ title: 'Categories' }} />
+  </Drawer.Navigator>
+);
+
 const App = () => {
   return (
     <NavigationContainer>
-      <BottomTabNavigator />
+      <DrawerNavigator />
+      {/* <BottomTabNavigator /> */}
+      {/* <Stack.Navigator>
+      <Stack.Screen name="HomeScreen" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Categories" component={Categories} />
+    </Stack.Navigator> */}
     </NavigationContainer>
   );
 };

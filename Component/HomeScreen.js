@@ -15,6 +15,7 @@ import { Card, Avatar, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import globalStyles from './globalStyles';
 import IconSelector, { ICON_TYPE } from './common/IconSelect';
+import { useNavigation } from '@react-navigation/native';
 
 
 const services = [
@@ -85,13 +86,13 @@ const reviewData = [{
 const MainContent = () => {
   const { width } = useWindowDimensions();
 
-  const ITEM_WIDTH = width * 0.9;  // Set width for each carousel item (80% of the screen)
-  const SPACING = 10;  // Set spacing between items
-  const scrollX = useRef(new Animated.Value(0)).current;  // Track the scrolling position
+  const ITEM_WIDTH = width * 0.9;
+  const SPACING = 10;
+  const scrollX = useRef(new Animated.Value(0)).current;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratingData, setRatingData] = useState(reviewData)
-
+  const navigation = useNavigation();
   const singleObject = {
     id: '1',
     name: 'Rohit Singhania',
@@ -99,7 +100,6 @@ const MainContent = () => {
       'Lorem ipsum dolor sit amet consectetur\nadipisicing elit. Neque, odio!',
   };
 
-  // Create an array with the single object repeated three times
   const data = Array.from({ length: 3 }, () => singleObject);
 
   const handleViewableItemsChanged = ({ viewableItems }) => {
@@ -109,7 +109,7 @@ const MainContent = () => {
   };
 
   const renderItem = ({ item }) => (
-    <View style={[globalStyles.carouselItem, { width: ITEM_WIDTH, marginRight: SPACING }]}>
+    <TouchableOpacity style={[globalStyles.carouselItem, { width: ITEM_WIDTH, marginRight: SPACING }]}>
       <Image source={item.image} style={globalStyles.absoluteImage} />
       <View style={globalStyles.textContainer}>
         <Text style={globalStyles.bannerTitle}>{item.title}</Text>
@@ -117,12 +117,12 @@ const MainContent = () => {
       <View style={globalStyles.discountContainer}>
         <Text style={globalStyles.bannerDiscount}>{item.discount}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);  // Update the active index
+      setCurrentIndex(viewableItems[0].index);
     }
   }).current;
 
@@ -133,10 +133,10 @@ const MainContent = () => {
       <Image
         source={item.image}
         style={{
-          ...StyleSheet.absoluteFillObject,
+          // ...StyleSheet.absoluteFillObject,
           width: '100%',
           height: '100%',
-          resizeMode: 'contain'
+          resizeMode: 'contain',
         }} />
       <Text style={globalStyles.serviceText1}>{item.title}</Text>
     </TouchableOpacity>
@@ -164,7 +164,7 @@ const MainContent = () => {
         </Text>
         {/* Know More Button */}
         <TouchableOpacity style={{
-          backgroundColor: '#ba6cf0', // Button color
+          backgroundColor: '#ba6cf0',
           paddingVertical: 5,
           paddingHorizontal: 12,
           borderRadius: 8,
@@ -184,7 +184,7 @@ const MainContent = () => {
   const setRatingForItem = (id, rating) => {
     setRatingData((prevData) =>
       prevData.map((item) =>
-        item.id === id ? { ...item, rating } : item // Update only the item that matches the id
+        item.id === id ? { ...item, rating } : item
       )
     );
   };
@@ -226,7 +226,7 @@ const MainContent = () => {
     <ScrollView style={globalStyles.container}>
       <View>
         <View style={globalStyles.header}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
             <Icon name="menu" size={30} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity>
@@ -276,8 +276,8 @@ const MainContent = () => {
             />
             <TouchableOpacity>
               <IconSelector
-                type={ICON_TYPE.Ionicons}
-                name="search-outline"
+                type={ICON_TYPE.MaterialCommunityIcons}
+                name="sort-variant"
                 size={25}
                 color="#000"
               />
@@ -306,19 +306,19 @@ const MainContent = () => {
             showsHorizontalScrollIndicator={false}
             snapToAlignment="center"
             snapToInterval={ITEM_WIDTH + 2 * SPACING}
-            decelerationRate="fast"  // Smooth scrolling
-            contentContainerStyle={{ paddingHorizontal: (width - ITEM_WIDTH) / 2 }}  // Center items initially
+            decelerationRate="fast"
+            contentContainerStyle={{ paddingHorizontal: (width - ITEM_WIDTH) / 2 }}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { x: scrollX } } }],
               { useNativeDriver: false }
             )}
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={viewConfig}
-            pagingEnabled={true} // Ensure only one item shows fully at a time
+            pagingEnabled={true}
           />
           <View style={globalStyles.dotsContainer}>
             {banners.map((_, index) => {
-              const isActive = index === currentIndex;  // Check if the dot is active
+              const isActive = index === currentIndex;
               return (
                 <View
                   key={index}
@@ -374,7 +374,7 @@ const MainContent = () => {
         </View>
         <FlatList
           data={data}
-          keyExtractor={(item, index) => index.toString()} // Use index as key if all items are the same
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <SingleItem item={item} />}
         />
 
@@ -441,7 +441,7 @@ const MainContent = () => {
         </View> */}
         <FlatList
           data={ratingData}
-          keyExtractor={(item, index) => index.toString()} // Use index as key if all items are the same
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <RatingItem item={item} rating={item.rating}
             setRating={(rating) => setRatingForItem(item.id, rating)} />}
         />

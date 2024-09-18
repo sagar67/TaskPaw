@@ -216,6 +216,11 @@ const globalStyles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: 20,
+  },
+  bellCotainer: {
+    backgroundColor: '#fcc0c3',
+    padding: 6,
+    borderRadius: 10,
   }
 });
 
